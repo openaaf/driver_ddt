@@ -36,12 +36,12 @@ ufs913_cic-objs += ufs9xx_cic/ufs9xx_cic.o
 obj-m += ufs913_cic.o
 endif
 
-ifdef FORTIS_HDBOX
+ifdef FS9000
 obj-m += starci.o
 starci-objs:= starci2win/starci2win.o
 endif
 
-ifdef OCTAGON1008
+ifdef HS9510
 cimax-objs += cimax/cimax.o
 obj-m += cimax.o
 endif
@@ -101,7 +101,7 @@ cimax-objs += cimax/cimax.o
 obj-m += cimax.o
 endif
 
-ifdef ATEVIO7500
+ifdef HS8200
 obj-m += starci.o
 starci-objs:= starci2win/starci2win.o
 endif

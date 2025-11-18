@@ -6,7 +6,7 @@
  * @brief Availink avl2108 - DVBS/S2 Satellite demod driver with Sharp BS2S7HZ6360 tuner
  *
  * Copyright (C) 2009-2010 Duolabs Spa
- * 2011 adapted by konfetti for use with ufs922, octagon1008 and atevio7500
+ * 2011 adapted by konfetti for use with ufs922, hs9510 (hs9510) and hs8200 (hs8200)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -632,7 +632,7 @@ static u16 avl2108_channel_lock(struct dvb_frontend *fe, struct avl2108_tuning *
 		{
 			if (tuning->lock_mode == LOCK_MODE_ADAPTIVE)
 			{
-				/* fixme: atevio7500 sets here 0. nevertheless 1 is the correct
+				/* fixme: hs8200 sets here 0. nevertheless 1 is the correct
 				 * value and seems to work.
 				 */
 				ret |= avl2108_i2c_write16(state, REG_LOCK_MODE, 1);
@@ -1818,7 +1818,7 @@ void avl2108_register_frontend(struct dvb_adapter *dvb_adap)
 	struct stpio_pin *pin;
 	int i;
 	printk("%s\n", __func__);
-#ifdef ATEVIO7500
+#ifdef HS8200
 	/* fixme: I think we should move this to st-merger.c */
 	/* set the muxer pin otherwise startci output will
 	 * not properly passed to tsmerger.

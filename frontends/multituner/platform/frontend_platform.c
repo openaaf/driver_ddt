@@ -29,13 +29,13 @@
 
 #include "frontend_platform.h"
 
-#if defined(ATEVIO7500)
+#if defined(HS8200)
 
-#include "at7500_platform.h"
+#include "hs8200_platform.h"
 
-#elif defined(OCTAGON1008)
+#elif defined(HS9510)
 
-#include "octagon1008_platform.h"
+#include "hs9510_platform.h"
 
 #elif defined(UFS922)
 

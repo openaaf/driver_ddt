@@ -716,13 +716,13 @@ static inline snd_pcm_uframes_t _ksnd_pcm_avail_update(snd_pcm_substream_t
 	snd_pcm_runtime_t *runtime = substream->runtime;
 	/*NICK added if to remove real updates which we do not want*/
 #if defined(__TDT__) \
- && (defined(FORTIS_HDBOX) \
+ && (defined(FS9000) \
  || defined(UFS922) \
  || defined(UFC960) \
  || defined(HL101) \
  || defined(VIP1_V2) \
  || defined(VIP2_V1) \
- || defined(OCTAGON1008) \
+ || defined(HS9510) \
  || defined(IPBOX9900) \
  || defined(IPBOX99) \
  || defined(IPBOX55) \
@@ -795,13 +795,13 @@ int ksnd_pcm_htimestamp(ksnd_pcm_t *kpcm, snd_pcm_uframes_t *avail, struct times
 	 * (BWC vs. BWD)
 	 */
 #if defined(__TDT__) \
- && (defined(FORTIS_HDBOX) \
+ && (defined(FS9000) \
  || defined(UFS922) \
  || defined(UFC960) \
  || defined(HL101) \
  || defined(VIP1_V2) \
  || defined(VIP2_V1) \
- || defined(OCTAGON1008) \
+ || defined(HS9510) \
  || defined(IPBOX9900) \
  || defined(IPBOX99) \
  || defined(IPBOX55) \

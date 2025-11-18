@@ -77,7 +77,7 @@ static int debug = 0;
 		if (debug) printk (args); \
 	} while (0)
 
-#if defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2) || defined(OCTAGON1008)
+#if defined(FS9000) || defined(HL101) || defined(VIP1_V2) || defined(HS9510)
 struct stpio_pin*	cic_enable_pin;
 struct stpio_pin*	module_pin[2];
 #endif
@@ -87,7 +87,7 @@ unsigned long reg_config = 0;
 unsigned long reg_buffer = 0;
 #if defined(TF7700)
 static unsigned short *slot_membase[2];
-#elif defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#elif defined(FS9000) || defined(HS9510)
 static unsigned char *slot_membase[2];
 #elif defined(HL101) || defined(VIP1_V2)
 static unsigned long reg_ci_base;
@@ -208,7 +208,7 @@ static int cimax_read_attribute_mem(struct dvb_ca_en50221 *ca, int slot, int add
 /* konfetti ->cimax control   */
 /* ************************** */
 
-#if defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2) || defined(OCTAGON1008)
+#if defined(FS9000) || defined(HL101) || defined(VIP1_V2) || defined(HS9510)
 static int
 cimax_writeregN (struct cimax_state *state, u8 * data, u16 len)
 {
@@ -299,7 +299,7 @@ static int cimax_readreg(struct cimax_state* state, u8 reg)
 */
 void getCiSource(int slot, int* source)
 {
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2)
+#if defined(TF7700) || defined(FS9000) || defined(HL101) || defined(VIP1_V2)
   int val;
 
   val = cimax_readreg(&ci_state, 0x11);
@@ -307,7 +307,7 @@ void getCiSource(int slot, int* source)
 
   if(slot == 0)
   {
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2)
+#if defined(TF7700) || defined(FS9000) || defined(HL101) || defined(VIP1_V2)
     if(val != 0)
       *source = 1;
     else
@@ -322,7 +322,7 @@ void getCiSource(int slot, int* source)
 
   if(slot == 1)
   {
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2)
+#if defined(TF7700) || defined(FS9000) || defined(HL101) || defined(VIP1_V2)
     if(val != 0)
       *source = 0;
     else
@@ -344,7 +344,7 @@ void getCiSource(int slot, int* source)
 */
 int setCiSource(int slot, int source)
 {
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2)
+#if defined(TF7700) || defined(FS9000) || defined(HL101) || defined(VIP1_V2)
   int val;
 
   if((slot < 0) || (slot > 1) ||
@@ -355,7 +355,7 @@ int setCiSource(int slot, int source)
   if(slot != source)
   {
     /* send stream A through module B and stream B through module A */
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2)
+#if defined(TF7700) || defined(FS9000) || defined(HL101) || defined(VIP1_V2)
     val |= 0x20;
 #else
     val &= ~0x20;
@@ -365,7 +365,7 @@ int setCiSource(int slot, int source)
   {
     /* enforce direct mapping */
     /* send stream A through module A and stream B through module B */
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2)
+#if defined(TF7700) || defined(FS9000) || defined(HL101) || defined(VIP1_V2)
     val &= ~0x20;
 #else
     val |= 0x20;
@@ -385,7 +385,7 @@ void setDestination(struct cimax_state *state, int slot)
    
    dprintk("%s (slot = %d)>\n", __func__, slot);
 
-#if !defined(FORTIS_HDBOX) && !defined(OCTAGON1008)
+#if !defined(FS9000) && !defined(HS9510)
    if (slot == 0)
    {
       /* read destination register */
@@ -471,7 +471,7 @@ static int cimax_poll_slot_status(struct dvb_ca_en50221 *ca, int slot, int open)
       else
       if (state->module_status[slot] & SLOTSTATUS_NONE)
       {
-#if defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(FS9000) || defined(HS9510)
   	       stpio_set_pin (module_pin[slot], 1);
 #endif
 
@@ -482,7 +482,7 @@ static int cimax_poll_slot_status(struct dvb_ca_en50221 *ca, int slot, int open)
    {
       if (!(state->module_status[slot] & SLOTSTATUS_NONE))
       {
-#if defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(FS9000) || defined(HS9510)
 	       stpio_set_pin (module_pin[slot], 0);
 #endif
 
@@ -525,7 +525,7 @@ static int cimax_slot_reset(struct dvb_ca_en50221 *ca, int slot)
 			printk("%s: result = 0x%x\n", __func__, result);
 			cimax_writereg(state, 0x00, result | 0x80);
 
-#if !defined(FORTIS_HDBOX) && !defined(OCTAGON1008)
+#if !defined(FS9000) && !defined(HS9510)
 			cimax_writereg(state, 0x17, 0x0);
 #endif
 			msleep(60);
@@ -548,7 +548,7 @@ static int cimax_slot_reset(struct dvb_ca_en50221 *ca, int slot)
 			printk("%s: result = 0x%x\n", __func__, result);
 			cimax_writereg(state, 0x09, result | 0x80);
 			
-#if !defined(FORTIS_HDBOX) && !defined(OCTAGON1008)
+#if !defined(FS9000) && !defined(HS9510)
 			cimax_writereg(state, 0x17, 0x0);
 #endif
 			msleep(60);
@@ -583,7 +583,7 @@ static int cimax_read_attribute_mem(struct dvb_ca_en50221 *ca, int slot, int add
 
 	   setDestination(state, slot);
 
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 	   res = slot_membase[slot][address];
 #elif defined(HL101) || defined(VIP1_V2)
 	   res = ctrl_inb(reg_ci_base + (address));
@@ -603,7 +603,7 @@ static int cimax_read_attribute_mem(struct dvb_ca_en50221 *ca, int slot, int add
 
 	   setDestination(state, slot);
 
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 	   res = slot_membase[slot][address];
 #elif defined(HL101) || defined(VIP1_V2)
 	   res = ctrl_inb(reg_ci_base + (address));
@@ -643,7 +643,7 @@ static int cimax_write_attribute_mem(struct dvb_ca_en50221 *ca, int slot, int ad
 
 	   setDestination(state, slot);
 
-#if defined(TF7700)  || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700)  || defined(FS9000) || defined(HS9510)
 	   slot_membase[slot][address] = value;
 #elif defined(HL101) || defined(VIP1_V2)
 	   ctrl_outb(value, reg_ci_base + (address));
@@ -662,7 +662,7 @@ static int cimax_write_attribute_mem(struct dvb_ca_en50221 *ca, int slot, int ad
 
 	   setDestination(state, slot);
 
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 	   slot_membase[slot][address] = value;
 #elif defined(HL101) || defined(VIP1_V2)
 	   ctrl_outb(value, reg_ci_base + (address));
@@ -694,7 +694,7 @@ static int cimax_read_cam_control(struct dvb_ca_en50221 *ca, int slot, u8 addres
 
 		setDestination(state, slot);
 
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 		res = slot_membase[slot][address];
 #elif defined(HL101) || defined(VIP1_V2)
 		res = ctrl_inb(reg_ci_base + (address /*<< 1*/));
@@ -715,7 +715,7 @@ static int cimax_read_cam_control(struct dvb_ca_en50221 *ca, int slot, u8 addres
 
 	   setDestination(state, slot);
 
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 	   res = slot_membase[slot][address];
 #elif defined(HL101) || defined(VIP1_V2)
 	   res = ctrl_inb(reg_ci_base + (address /*<< 1*/));
@@ -726,7 +726,7 @@ static int cimax_read_cam_control(struct dvb_ca_en50221 *ca, int slot, u8 addres
 	}
 
 	if (address <= 2)
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 	{
 	}
 #elif defined(HL101) || defined(VIP1_V2)
@@ -753,7 +753,7 @@ static int cimax_write_cam_control(struct dvb_ca_en50221 *ca, int slot, u8 addre
 	dprintk("%s > slot = %d, address = %d, value = %d\n", __FUNCTION__, slot, address, value);
 
 	if (address <= 2)
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 	{
 	}
 #elif defined(HL101) || defined(VIP1_V2)
@@ -773,7 +773,7 @@ static int cimax_write_cam_control(struct dvb_ca_en50221 *ca, int slot, u8 addre
 
 		setDestination(state, slot);
 
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 		slot_membase[slot][address] = value;
 #elif defined(HL101) || defined(VIP1_V2)
 		ctrl_outb(value, reg_ci_base + (address ));
@@ -792,7 +792,7 @@ static int cimax_write_cam_control(struct dvb_ca_en50221 *ca, int slot, u8 addre
 
 		setDestination(state, slot);
 
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 	   slot_membase[slot][address] = value;
 #elif defined(HL101) || defined(VIP1_V2)
 		ctrl_outb(value, reg_ci_base + (address ));
@@ -824,11 +824,11 @@ static int cimax_slot_ts_enable(struct dvb_ca_en50221 *ca, int slot)
 	   /* das read back der register ist gleichzeitig unser sleep! */	
 	   int result = cimax_readreg(state, 0x00);
 	   
-#if !defined(FORTIS_HDBOX) && !defined(OCTAGON1008)
+#if !defined(FS9000) && !defined(HS9510)
 	   cimax_writereg(state, 0x00, 0x23);
 	   
 	   printk("%s: writing 0x%x\n", __func__, 0x23);
-#elif !defined(OCTAGON1008)
+#elif !defined(HS9510)
 	   cimax_writereg(state, 0x00, result | 0x20);
 #else
 	   cimax_writereg(state, 0x00, result | 0x21);
@@ -849,10 +849,10 @@ static int cimax_slot_ts_enable(struct dvb_ca_en50221 *ca, int slot)
 	{
 	   int result = cimax_readreg(state, 0x09);
 
-#if !defined(FORTIS_HDBOX) && !defined(OCTAGON1008)
+#if !defined(FS9000) && !defined(HS9510)
 	   cimax_writereg(state, 0x09, 0x23);
 	   printk("%s: writing 0x%x\n", __func__, 0x23);
-#elif !defined(OCTAGON1008)
+#elif !defined(HS9510)
 	   cimax_writereg(state, 0x09, result | 0x20);
 #else
 	   cimax_writereg(state, 0x09, result | 0x21);
@@ -882,15 +882,15 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 	dprintk("init_cimax >\n");
 
 	core->dvb_adap = dvb_adap;
-#if defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2)
+#if defined(FS9000) || defined(HL101) || defined(VIP1_V2)
 	state->i2c = i2c_get_adapter(2);
-#elif defined(OCTAGON1008)
+#elif defined(HS9510)
 	state->i2c = i2c_get_adapter(1);
 #else
 	state->i2c = i2c_get_adapter(0);
 #endif
 
-#if defined(OCTAGON1008)
+#if defined(HS9510)
 	state->i2c_addr = 0x43;
 #else
 	state->i2c_addr = 0x40;
@@ -923,7 +923,7 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 	dprintk (KERN_ERR "ioremap 0x%.8x -> 0x%.8lx\n", EMIConfigBaseAddress, reg_config);	
 	dprintk (KERN_ERR "ioremap 0x%.8x -> 0x%.8lx\n", EMIBufferBaseAddress, reg_buffer);	
 
-#if defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(FS9000) || defined(HS9510)
 
 	cic_enable_pin = stpio_request_pin (3, 6, "StarCI", STPIO_OUT);
 	stpio_set_pin (cic_enable_pin, 1);
@@ -957,7 +957,7 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 	/* cimax reset */
 	cimax_writereg(state, 0x1f, 0x80);
 
-#if defined(FORTIS_HDBOX) || defined(HL101) || defined(VIP1_V2)
+#if defined(FS9000) || defined(HL101) || defined(VIP1_V2)
 	u8 sequence[] =
 	{
 	  0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x44, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x02, 0x44,
@@ -967,7 +967,7 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 
 	cimax_writeregN(state, sequence, 33);
 
-#elif defined(OCTAGON1008)
+#elif defined(HS9510)
 	u8 sequence[] =
 	{
 	  0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x44, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x02, 0x44,
@@ -977,7 +977,7 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 	cimax_writeregN(state, sequence, 33);
 #endif
  
-#if !defined(FORTIS_HDBOX) && !defined(OCTAGON1008)
+#if !defined(FS9000) && !defined(HS9510)
 	/* Modul A auto activation */	
 	cimax_writereg(state, 0x00, 0x02);
 
@@ -991,14 +991,14 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 #if defined(TF7700)
 	/* Powercontrol: VCLVL ->VCC pin active-low (LOCK muss 0 sein) */
 	cimax_writereg(state, 0x18, 0x80);
-#elif defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#elif defined(FS9000) || defined(HS9510)
 	cimax_writereg(state, 0x18, 0x21);
 #else
 	/* Powercontrol: VCLVL ->VCC pin active-high (LOCK muss 0 sein) */
 	cimax_writereg(state, 0x18, 0x40);	
 #endif
 
-#if !defined(FORTIS_HDBOX) && !defined(OCTAGON1008)
+#if !defined(FS9000) && !defined(HS9510)
 	/* Destination Select: Select modul A */
 	cimax_writereg(state, 0x17, 0x02);
 
@@ -1091,9 +1091,9 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 	/* LOCK */
 	cimax_writereg(state, 0x1f, 0x01);
 
-#endif /* !fortis_hdbox && !octagon  */
+#endif /* !fs9000 && !octagon  */
 
-#if defined(TF7700) || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700) || defined(FS9000) || defined(HS9510)
 	/* POWER ON */
 	cimax_writereg(state, 0x18, 0x21);
 #else
@@ -1133,7 +1133,7 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 	ctrl_outl(0x0,reg_config + EMIBank2 + EMI_CFG_DATA3);
 
 	ctrl_outl(0x0, reg_config + EMI_FLASH_CLK_SEL);
-#elif defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#elif defined(FS9000) || defined(HS9510)
 /* FIXME: this is mysterious on HDBOX! there is no lock setting EMI_LCK and there is
  * no EMI_CLK_EN, so the settings cant get into effect?
  */
@@ -1164,9 +1164,9 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 #endif
 	ctrl_outl(0x1, reg_config + EMI_CLK_EN);
 
-#if defined(TF7700)  || defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(TF7700)  || defined(FS9000) || defined(HS9510)
 
-#if defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(FS9000) || defined(HS9510)
 	slot_membase[0] = (unsigned long) 0xa2000000;
 #else
 	slot_membase[0] = (unsigned long) ioremap( 0xa3000000, 0x1000 );
@@ -1178,7 +1178,7 @@ int init_ci_controller(struct dvb_adapter* dvb_adap)
 	}
 #if defined(TF7700)
 	slot_membase[1] = (unsigned long) ioremap( 0xa3400000, 0x1000 );
-#elif defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#elif defined(FS9000) || defined(HS9510)
 	slot_membase[1] = (unsigned long) 0xa2010000;
 #else
 	slot_membase[1] = (unsigned long) ioremap( 0xa3010000, 0x1000 );

@@ -206,7 +206,7 @@ obj-m += stv090x.o
 obj-y += lnb/
 endif 
 
-ifdef FORTIS_HDBOX
+ifdef FS9000
 stv090x-objs += stv090x/stv090x.o
 stv090x-objs += stv090x/stv6110x.o
 stv090x-objs += stv090x/ix7306.o
@@ -248,7 +248,7 @@ cx24116-objs += cx24116_dvbapi5/cx24116.o
 obj-m += cx24116.o
 endif
 
-ifdef OCTAGON1008
+ifdef HS9510
 avl2108-objs += avl2108/avl2108.o
 avl2108-objs += avl2108/stv6110a.o
 avl2108-objs += avl2108/stv6306.o
@@ -260,7 +260,7 @@ avl2108_platform-objs += avl2108/avl2108_platform.o
 obj-m += avl2108_platform.o
 endif
 
-ifdef ATEVIO7500
+ifdef HS8200
 #avl2108-objs += avl2108/avl2108.o
 #avl2108-objs += avl2108/stv6110a.o
 #avl2108-objs += avl2108/stv6306.o

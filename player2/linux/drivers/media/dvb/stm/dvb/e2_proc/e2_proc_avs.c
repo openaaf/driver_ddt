@@ -112,7 +112,7 @@ static int current_input = ENCODER;
  || defined(HL101) \
  || defined(VIP1_V2) \
  || defined(VIP2_V1) \
- || defined(ATEVIO7500) \
+ || defined(HS8200) \
  || defined(HS7110) \
  || defined(HS7810A) \
  || defined(HS7420) \
@@ -188,7 +188,7 @@ int proc_avs_0_volume_write(struct file *file, const char __user *buf,
  || defined(HL101) \
  || defined(VIP1_V2) \
  || defined(VIP2_V1) \
- || defined(ATEVIO7500) \
+ || defined(HS8200) \
  || defined(HS7110) \
  || defined(HS7810A) \
  || defined(HS7420) \

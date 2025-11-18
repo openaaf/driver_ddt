@@ -277,7 +277,7 @@ inline int stv6418_set_mute( struct i2c_client *client, int type )
 		   set_bits(regs, cReg1, 0, 0, 2); /* tv cinch mute */
 		   set_bits(regs, cReg1, 0, 3, 2); /* vcr mute */
 		}
-#ifndef ATEVIO7500
+#ifndef HS8200
 #if !defined (IPBOX9900) && !defined (IPBOX99) && !defined(CUBEREVO_3000HD)
 		MUTE_SET();
 #endif
@@ -293,7 +293,7 @@ inline int stv6418_set_mute( struct i2c_client *client, int type )
 			tv_value = 0xff;
 			vcr_value = 0xff;
 		}
-#ifndef ATEVIO7500
+#ifndef HS8200
 #if !defined (IPBOX9900) && !defined (IPBOX99) && !defined(CUBEREVO_3000HD)
 		MUTE_CLR();
 #endif
@@ -934,7 +934,7 @@ int stv6418_init(struct i2c_client *client)
 	regs[9] = 0xc0;
 	regs[10]= 0x00;
 
-#if !defined(IPBOX9900) && !defined(IPBOX99) && !defined(ATEVIO7500) && !defined(CUBEREVO_3000HD)
+#if !defined(IPBOX9900) && !defined(IPBOX99) && !defined(HS8200) && !defined(CUBEREVO_3000HD)
 	eMute= stpio_request_pin (2, 2, "AVS_MUTE", STPIO_OUT);
 	if (eMute == NULL)
 	{

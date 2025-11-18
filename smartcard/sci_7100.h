@@ -17,7 +17,7 @@
 
 /* Hellmaster1024 Octagon1008 and Fortis HDBOX need these defines, maybe other sti7100/sti7101 based STB need this defines too
 */
-#if defined(OCTAGON1008) || defined(FORTIS_HDBOX) || defined(CUBEBOX) || defined(IPBOX)
+#if defined(HS9510) || defined(FS9000) || defined(CUBEBOX) || defined(IPBOX)
 #define SUPPORT_NO_VOLTAGE
 #define SUPPORT_NO_AUTOSET
 #endif

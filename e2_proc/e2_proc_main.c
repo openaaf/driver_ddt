@@ -285,12 +285,14 @@ static int info_model_read(char *page, char **start, off_t off, int count, int *
 	int len = sprintf(page, "spark\n");
 #elif defined(SPARK7162)
 	int len = sprintf(page, "spark7162\n");
-#elif defined(FORTIS_HDBOX)
+#elif defined(FS9000)
 	int len = sprintf(page, "hdbox\n");
-#elif defined(OCTAGON1008)
-	int len = sprintf(page, "octagon1008\n");
-#elif defined(ATEVIO7500)
-	int len = sprintf(page, "atevio7500\n");
+#elif defined(HS9510)
+	int len = sprintf(page, "hs9510\n");
+#elif defined(HS8200)
+	int len = sprintf(page, "hs8200\n");
+#elif defined(HS8200)
+	int len = sprintf(page, "hs8200\n");
 #elif defined(HS7110)
 	int len = sprintf(page, "hs7110\n");
 #elif defined(HS7119)
@@ -336,14 +338,14 @@ static int info_chipset_read(char *page, char **start, off_t off, int count, int
 #if defined(UFS910) \
  || defined(ADB_BOX)
 	int len = sprintf(page, "STi7100\n");
-#elif defined(ATEVIO7500) \
+#elif defined(HS8200) \
  || defined(UFS913) \
  || defined(SAGEMCOM88) \
  || defined(PACE7241)
 	int len = sprintf(page, "STi7105\n");
-#elif defined(FORTIS_HDBOX) \
+#elif defined(FS9000) \
  || defined(HL101) \
- || defined(OCTAGON1008) \
+ || defined(HS9510) \
  || defined(TF7700) \
  || defined(UFS922) \
  || defined(UFC960) \
@@ -750,7 +752,7 @@ struct ProcStructure_s e2Proc[] =
 	{cProcEntry, "stb/video/plane/psi_apply"                                        , NULL, NULL, NULL, NULL, "psi_apply"},
 #if defined(UFS912) \
  || defined(UFS913) \
- || defined(ATEVIO7500) \
+ || defined(HS8200) \
  || defined(HS7110) \
  || defined(HS7119) \
  || defined(ATEMIO520) \

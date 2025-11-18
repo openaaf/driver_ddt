@@ -16,8 +16,8 @@ else
 CCFLAGSY += -D__TDT__ -D__LINUX__ -D__SH4__ -D__KERNEL__ -DMODULE -DEXPORT_SYMTAB
 
 
-ifdef OCTAGON1008
-CCFLAGSY += -DOCTAGON1008
+ifdef HS9510
+CCFLAGSY += -DHS9510
 endif
 
 ifdef UFS910
@@ -86,11 +86,11 @@ ifdef SPARK7162
 CCFLAGSY+=-DSPARK7162
 endif
 
-ifdef FORTIS_HDBOX
-CCFLAGSY += -DFORTIS_HDBOX
+ifdef FS9000
+CCFLAGSY += -DFS9000
 endif
-ifdef ATEVIO7500
-CCFLAGSY += -DATEVIO7500
+ifdef HS8200
+CCFLAGSY += -DHS8200
 endif
 ifdef HS7110
 CCFLAGSY += -DHS7110
@@ -225,7 +225,7 @@ ifdef UFS913
 obj-y += cec/
 endif
 
-ifdef ATEVIO7500
+ifdef HS8200
 obj-y += cec/
 obj-y += smartcard/
 obj-y += sata_switch/
@@ -284,11 +284,11 @@ obj-y += dvbt/as102/
 obj-y += dvbt/siano/
 endif
 
-ifdef OCTAGON1008
+ifdef HS9510
 obj-y += smartcard/
 endif
 
-ifdef FORTIS_HDBOX
+ifdef FS9000
 obj-y += smartcard/
 endif
 

@@ -39,7 +39,7 @@
  || defined(VITAMIN_HD5000)
 #include "sci_7111.h"
 #elif defined(CONFIG_CPU_SUBTYPE_STX7105) \
- || defined(ATEVIO7500)
+ || defined(HS8200)
 #include "sci_7105.h"
 #endif
 
@@ -70,8 +70,8 @@
 /******* SC generic *******/
 
 #if defined(HL101) \
- || defined(ATEVIO7500) \
- || defined(FORTIS_HDBOX) \
+ || defined(HS8200) \
+ || defined(FS9000) \
  || defined(CUBEREVO) \
  || defined(ADB_BOX) \
  || defined(SPARK7162) \
@@ -184,7 +184,7 @@
 
 /******* Char dev driver *******/
 #define DEVICE_NAME         "sc"
-#if defined(FORTIS_HDBOX)
+#if defined(FS9000)
 #define MAJOR_NUM           253 /**< Major num of char dev */
 #else
 #define MAJOR_NUM           169 /**< Major num of char dev */

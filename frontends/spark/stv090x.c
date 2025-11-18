@@ -61,7 +61,7 @@ static struct stpio_pin *fe_lnb_14_19;
 static struct stpio_pin *fe_lnb_on_off;
 #endif
 
-#if defined(CONFIG_KERNELVERSION) && defined(FORTIS_HDBOX)/* STLinux 2.3 */
+#if defined(CONFIG_KERNELVERSION) && defined(FS9000)/* STLinux 2.3 */
 void ctrl_fn_using_non_p3_address(void)
 {
 	printk("ctrl_fn_using_non_p3_address FRONTEND OK\n");

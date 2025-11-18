@@ -27,7 +27,7 @@ obj-m += socket.o
 frontend_platform-objs +=       platform/frontend_platform.o
 obj-m += frontend_platform.o
 
-ifdef ATEVIO7500
+ifdef HS8200
 avl2108-objs +=        frontends/avl2108/avl2108.o
 avl2108-objs +=        frontends/avl2108/stv6110a.o
 avl2108-objs +=        frontends/avl2108/stv6306.o

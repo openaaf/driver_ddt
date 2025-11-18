@@ -24,7 +24,7 @@
 #include "sci_7100.h"
 #elif defined(CONFIG_CPU_SUBTYPE_STX7111) || defined(CONFIG_SH_ST_MB618) || defined(VITAMIN_HD5000)
 #include "sci_7111.h"
-#elif defined(CONFIG_CPU_SUBTYPE_STX7105) || defined(ATEVIO7500)
+#elif defined(CONFIG_CPU_SUBTYPE_STX7105) || defined(HS8200)
 #include "sci_7105.h"
 #endif
 

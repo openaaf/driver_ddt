@@ -19,7 +19,7 @@ static struct core *core[MAX_DVB_ADAPTERS];
 
 static struct stv090x_config tt1600_stv090x_config =
 {
-#if defined(FORTIS_HDBOX)
+#if defined(FS9000)
 	.device = STV0903,
 	.demod_mode = STV090x_DUAL/*STV090x_SINGLE*/,
 #elif defined(UFS912) || defined(SPARK)
@@ -30,7 +30,7 @@ static struct stv090x_config tt1600_stv090x_config =
 #endif
 	.clk_mode = STV090x_CLK_EXT,
 
-#if defined(FORTIS_HDBOX)
+#if defined(FS9000)
 	.xtal = 16000000/*8000000*/,
 #elif defined(UFS912) || defined(SPARK)
 	.xtal = 30000000,
@@ -40,7 +40,7 @@ static struct stv090x_config tt1600_stv090x_config =
 	.address = 0x68,
 	.ref_clk = 16000000,
 
-#if defined(FORTIS_HDBOX)
+#if defined(FS9000)
 	.ts1_mode = STV090x_TSMODE_DVBCI/*STV090x_TSMODE_SERIAL_CONTINUOUS*/,
 	.ts2_mode = STV090x_TSMODE_DVBCI/*STV090x_TSMODE_SERIAL_CONTINUOUS*/,
 #elif defined(UFS912) || defined(SPARK)
@@ -52,7 +52,7 @@ static struct stv090x_config tt1600_stv090x_config =
 	.ts1_clk = 0, /* diese regs werden in orig nicht gesetzt */
 	.ts2_clk = 0, /* diese regs werden in orig nicht gesetzt */
 
-#if defined(FORTIS_HDBOX)
+#if defined(FS9000)
 	.repeater_level = STV090x_RPTLEVEL_16,
 #elif defined(UFS912) || defined(SPARK)
 	.repeater_level = STV090x_RPTLEVEL_64,
@@ -243,7 +243,7 @@ init_stv090x_device(struct dvb_adapter *adapter,
 
 struct plat_tuner_config tuner_resources[] =
 {
-#if defined(FORTIS_HDBOX)
+#if defined(FS9000)
 	[0] = {
 		.adapter = 0,
 		.i2c_bus = 0,

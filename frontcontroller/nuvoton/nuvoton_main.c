@@ -55,7 +55,7 @@
  * SOP, 0x93, 0x01, 0x00, 0x08, EOP (=red LED off)
  * SOP, 0x93, 0xf2, 0x0a, 0x00, EOP (=blue LED + cross brightness 10)
  *
- * New commands from octagon1008:
+ * New commands from hs9510:
  * SOP 0xd0 EOP
  *
  * SOP 0xc4 0x20 0x00 0x00 0x00 EOP (= SetIcon nothing)
@@ -125,9 +125,9 @@ static unsigned char expectEventId   = 1;
 #define cGetTimeSize         9
 #define cGetWakeupReasonSize 5
 
-#if defined(ATEVIO7500) \
- || defined(FORTIS_HDBOX) \
- || defined(OCTAGON1008)
+#if defined(HS8200) \
+ || defined(FS9000) \
+ || defined(HS9510)
 #define cMinimumSize         4
 #else
 #define cMinimumSize         5

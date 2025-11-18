@@ -76,7 +76,7 @@ extern void cx24116_register_frontend(struct dvb_adapter *dvb_adap);
 extern void avl2108_register_frontend(struct dvb_adapter *dvb_adap);
 #elif defined(UFC960)
 extern void fe_core_register_frontend(struct dvb_adapter *dvb_adap);
-#elif defined(FORTIS_HDBOX) \
+#elif defined(FS9000) \
  || defined(UFS912) \
  || defined(SPARK) \
  || defined(HS7110) \
@@ -108,9 +108,9 @@ extern void fe_core_register_frontend(struct dvb_adapter *dvb_adap);
  || defined(CUBEREVO_MINI_FTA) \
  || defined(CUBEREVO_3000HD)
 extern void socket_register_adapter(struct dvb_adapter *dvb_adap);
-#elif defined(OCTAGON1008)
+#elif defined(HS9510)
 extern void avl2108_register_frontend(struct dvb_adapter *dvb_adap);
-#elif defined(ATEVIO7500)
+#elif defined(HS8200)
 extern void socket_register_adapter(struct dvb_adapter *dvb_adap);
 #elif defined(SPARK7162)
 extern void spark7162_register_frontend(struct dvb_adapter *dvb_adap);
@@ -407,7 +407,7 @@ static int convert_source(const dmx_source_t source)
 	{
 		case DMX_SOURCE_FRONT0:
 #if defined(UFS910) \
- || defined(OCTAGON1008) \
+ || defined(HS9510) \
  || defined(UFS912) \
  || defined(ADB_BOX) \
  || defined(SPARK) \
@@ -527,7 +527,7 @@ void ptiInit(struct DeviceContext_s *pContext)
  || defined(UFS913) \
  || defined(SPARK) \
  || defined(SPARK7162) \
- || defined(ATEVIO7500) \
+ || defined(HS8200) \
  || defined(HS7110) \
  || defined(HS7810A) \
  || defined(HS7420) \
@@ -590,7 +590,7 @@ void ptiInit(struct DeviceContext_s *pContext)
  || defined(TF7700) \
  || defined(UFS922) \
  || defined(UFC960) \
- || defined(FORTIS_HDBOX) \
+ || defined(FS9000) \
  || defined(HL101) \
  || defined(VIP1_V2) \
  || defined(VIP2_V1) \
@@ -602,7 +602,7 @@ void ptiInit(struct DeviceContext_s *pContext)
  || defined(CUBEREVO_9500HD) \
  || defined(CUBEREVO_MINI_FTA) \
  || defined(CUBEREVO_3000HD) \
- || defined(ATEVIO7500) \
+ || defined(HS8200) \
  || defined(IPBOX9900) \
  || defined(IPBOX99) \
  || defined(IPBOX55) \
@@ -615,7 +615,7 @@ void ptiInit(struct DeviceContext_s *pContext)
 #else
 		pti_hal_init(&pti, &pContext->DvbDemux, demultiplexDvbPackets, 1);
 #endif
-#if defined(FORTIS_HDBOX) \
+#if defined(FS9000) \
  || defined(UFS912) \
  || defined(SPARK) \
  || defined(HS7110) \
@@ -647,9 +647,9 @@ void ptiInit(struct DeviceContext_s *pContext)
  || defined(CUBEREVO_MINI_FTA) \
  || defined(CUBEREVO_3000HD)
 		socket_register_adapter(&pContext->DvbContext->DvbAdapter);
-#elif defined(OCTAGON1008)
+#elif defined(HS9510)
 		avl2108_register_frontend(&pContext->DvbContext->DvbAdapter);
-#elif defined(ATEVIO7500)
+#elif defined(HS8200)
 		socket_register_adapter(&pContext->DvbContext->DvbAdapter);
 #elif defined(SPARK7162)
 		spark7162_register_frontend(&pContext->DvbContext->DvbAdapter);

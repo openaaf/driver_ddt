@@ -37,13 +37,13 @@
  *                          once if text is longer than display size,
  * 20131224 Audioniek       except on HS7119, HS7810A & HS7819.
  * 20131205 Audioniek       Errors and doubles corrected in HDBOX icon table.
- * 20131220 Audioniek       Start of work on ATEVIO7500 (Fortis HS8200).
+ * 20131220 Audioniek       Start of work on HS8200 (Fortis HS8200).
  * 20131224 Audioniek       nuvotonWriteString on HS7119/HS7810A/HS7819
  *                          completely rewritten including special handling
  *                          of periods and colons.
  * 20140210 Audioniek       Start of work on HS7119 & HS7819.
- * 20140403 Audioniek       SetLED for ATEVIO7500 added.
- * 20140415 Audioniek       ATEVIO7500 finished; yet to do: icons.
+ * 20140403 Audioniek       SetLED for HS8200 added.
+ * 20140415 Audioniek       HS8200 finished; yet to do: icons.
  * 20140426 Audioniek       HS7119/7810A/7819 work completed.
  * 20140916 Audioniek       Fixed compiler warnings with HS7119/7810A/7819.
  * 20140921 Audioniek       No special handling of periods and colons for
@@ -80,12 +80,12 @@
 #include "nuvoton_asc.h"
 #include "nuvoton_utf.h"
 
-#if defined(OCTAGON1008) \
+#if defined(HS9510) \
  || defined(HS7420) \
  || defined(HS7429)
 #define DISP_SIZE 8
-#elif defined(FORTIS_HDBOX) \
- || defined(ATEVIO7500)
+#elif defined(FS9000) \
+ || defined(HS8200)
 #define DISP_SIZE 12
 #elif defined(HS7810A) \
  || defined(HS7119) \
@@ -114,7 +114,7 @@ struct saved_data_s
 
 u8 regs[0xff];  // array with copy values of FP registers
 
-#if defined(OCTAGON1008) || defined(HS7420) || defined(HS7429)
+#if defined(HS9510) || defined(HS7420) || defined(HS7429)
 /* Note on adding HS742X: The front panel controller is almost
    equal to the one on the Octagon1008 (the board it is built
    on says HS-9510HD FRONT B-Type) but has a different VFD tube
@@ -303,7 +303,7 @@ struct chars
 	{0xff, 0xff, 0x7f} //0x7f
 };
 
-#if defined(OCTAGON1008)
+#if defined(HS9510)
 enum //HS9510 icon numbers and their names, HS742X models do not have user controllable icons)
 {
 	ICON_MIN,     // 00
@@ -462,7 +462,7 @@ static int _7seg_fonts[] =
 #endif
 
 
-#if defined(FORTIS_HDBOX)
+#if defined(FS9000)
 enum
 {
 	ICON_MIN,       // 00
@@ -588,14 +588,14 @@ struct iconToInternal
 #define cCommandGetPort          0xb2
 #define cCommandSetPort          0xb3
 
-#if defined(OCTAGON1008)
+#if defined(HS9510)
 #define cCommandSetIcon          0xc4 // 05 1:position 2:data 3:data 4:data
 #else
 #define cCommandSetIconI         0xc2 // 03 1:registernumber 2:bitmask for on/off     /* 0xc2 0xc7 0xcb 0xcc */ /* display cgram */
 #define cCommandSetIconII        0xc7 // not used in nuvoton
 #endif
 
-#if defined(OCTAGON1008) || defined(HS7420) || defined(HS7429)
+#if defined(HS9510) || defined(HS7420) || defined(HS7429)
 #define cCommandSetVFD           0xc4 //same as cCommandSetIcon
 #elif defined(HS7110) || defined(HS7119) || defined(HS7810A) || defined(HS7819)
 #define cCommandSetVFD           0x24 // 05 1:data pos1 2:data pos2 3:data pos3 4:data pos4
@@ -605,7 +605,7 @@ struct iconToInternal
 
 #define cCommandSetVFDBrightness 0xd2 // 03 1:0 2:level
 
-#if defined(ATEVIO7500) || defined(HS7110) || defined(HS7119) || defined(HS7810A) || defined(HS7819) || defined(HS7420) || defined(HS7429)
+#if defined(HS8200) || defined(HS7110) || defined(HS7119) || defined(HS7810A) || defined(HS7819) || defined(HS7420) || defined(HS7429)
 #define cCommandGetFrontInfo     0xd0 // not used in nuvoton
 #else
 #define cCommandGetFrontInfo     0xe0 // not used in nuvoton
@@ -658,7 +658,7 @@ int nuvotonWriteCommand(char *buffer, int len, int needAck)
 	return 0;
 }
 
-#if defined (OCTAGON1008)
+#if defined (HS9510)
 int nuvotonSetIcon(int which, int on)
 {
 	char buffer[7];
@@ -718,7 +718,7 @@ int nuvotonSetIcon(int which, int on)
 	return res;
 }
 
-#elif defined(FORTIS_HDBOX)
+#elif defined(FS9000)
 int nuvotonSetIcon(int which, int on)  //works for icons 1 - 16 only on later production models
 {
 	char buffer[5];
@@ -795,7 +795,7 @@ int nuvotonSetIcon(int which, int on)  //works for icons 1 - 16 only on later pr
 	dprintk(100, "%s <\n", __func__);
 	return res;
 }
-#elif defined (ATEVIO7500)
+#elif defined (HS8200)
 int nuvotonSetIcon(int which, int on)
 {
 	return 0;
@@ -817,10 +817,10 @@ int nuvotonSetLED(int which, int level)
 
 	dprintk(100, "%s > %d, %d\n", __func__, which, level);
 
-#if defined(OCTAGON1008)
+#if defined(HS9510)
 #define MAX_LED 1
 #define MAX_BRIGHT 7
-#elif defined(FORTIS_HDBOX) || defined(ATEVIO7500) // New Nuvoton                    
+#elif defined(FS9000) || defined(HS8200) // New Nuvoton                    
 #define MAX_LED 256  // LED number is a bit mask: bit 0 (  1) = red power
 	//                           bit 1 (  2) = blue power
 	//                           bit 2 (  4) = -
@@ -830,7 +830,7 @@ int nuvotonSetLED(int which, int level)
 	//                           bit 6 ( 64) = cross top
 	//                           bit 7 (128) = cross right
 	//                           (0xf2 = full cross plus blue)
-	// TODO: Buggy on ATEVIO7500, fp seems to have a life of its own
+	// TODO: Buggy on HS8200, fp seems to have a life of its own
 #define MAX_BRIGHT 31
 #elif defined(HS7420) || defined(HS7429)
 	// LED number is a bit mask:
@@ -1061,7 +1061,7 @@ int nuvotonSetTimeFormat(char format)
 int nuvotonSetDisplayOnOff(char level)
 {
 	int  res = 0;
-#if defined(OCTAGON1008) //|| defined(HS7420) || defined(HS7429)
+#if defined(HS9510) //|| defined(HS7420) || defined(HS7429)
 	char buffer[5];
 
 	dprintk(100, "%s >\n", __func__);
@@ -1078,7 +1078,7 @@ int nuvotonSetDisplayOnOff(char level)
 	buffer[4] = EOP;
 
 	res = nuvotonWriteCommand(buffer, 5, 0);
-#elif defined(FORTIS_HDBOX)
+#elif defined(FS9000)
 	char buffer[5];
 
 	dprintk(100, "%s >\n", __func__);
@@ -1094,7 +1094,7 @@ int nuvotonSetDisplayOnOff(char level)
 	buffer[4] = EOP;
 
 	res = nuvotonWriteCommand(buffer, 5, 0);
-#elif defined(ATEVIO7500) \
+#elif defined(HS8200) \
  || defined(HS7420) \
  || defined(HS7810A) \
  || defined(HS7119) \
@@ -1250,7 +1250,7 @@ int nuvotonWriteString(unsigned char *aBuf, int len)
 	dprintk(10, "%s <\n", __func__);
 	return res;
 }
-#elif defined(OCTAGON1008) || defined(HS7420) || defined(HS7429) // 8 character 15-segment VFD (Octagon1008 with icons)
+#elif defined(HS9510) || defined(HS7420) || defined(HS7429) // 8 character 15-segment VFD (Octagon1008 with icons)
 int nuvotonWriteString(unsigned char *aBuf, int len)
 {
 	unsigned char bBuf[7];
@@ -1293,7 +1293,7 @@ int nuvotonWriteString(unsigned char *aBuf, int len)
 	dprintk(100, "%s <\n", __func__);
 	return res;
 }
-#elif defined(FORTIS_HDBOX) // 12 character dot matrix VFD with colons and icons
+#elif defined(FS9000) // 12 character dot matrix VFD with colons and icons
 int nuvotonWriteString(unsigned char *aBuf, int len)
 {
 	unsigned char bBuf[12];
@@ -1328,7 +1328,7 @@ int nuvotonWriteString(unsigned char *aBuf, int len)
 	dprintk(100, "%s <\n", __func__);
 	return res;
 }
-#elif defined(ATEVIO7500) // 13 character dot matrix VFD without colons or icons, leftmost character not used
+#elif defined(HS8200) // 13 character dot matrix VFD without colons or icons, leftmost character not used
 int nuvotonWriteString(unsigned char *aBuf, int len)
 {
 	unsigned char bBuf[128];
@@ -1440,7 +1440,7 @@ int nuvotonWriteString(unsigned char *aBuf, int len)
 	dprintk(100, "%s <\n", __func__);
 	return res;
 }
-#else // not HS7119, HS7420, HS7429, HS7810A, HS7819, OCTAGON1008, FORTIS_HDBOX or ATEVIO7500 -> HS7110
+#else // not HS7119, HS7420, HS7429, HS7810A, HS7819, HS9510, FS9000 or HS8200 -> HS7110
 int nuvotonWriteString(unsigned char *aBuf, int len)
 {
 	dprintk(100, "%s >\n", __func__);
@@ -1449,7 +1449,7 @@ int nuvotonWriteString(unsigned char *aBuf, int len)
 }
 #endif
 
-#if !defined(ATEVIO7500)
+#if !defined(HS8200)
 int nuvoton_init_func(void)
 {
 	char standby_disable[] = {SOP, cCommandPowerOffReplay, 0x02, EOP};
@@ -1457,7 +1457,7 @@ int nuvoton_init_func(void)
 	char init2[] = {SOP, cCommandSetTimeFormat, 0x81, EOP};       //set 24h clock format ?
 	char init3[] = {SOP, cCommandSetWakeupTime, 0xff, 0xff, EOP}; /* delete/invalidate wakeup time ? */
 	char init4[] = {SOP, cCommandSetLed, 0x01, 0x00, 0x08, EOP};  //power LED (red) off
-#if defined(FORTIS_HDBOX)
+#if defined(FS9000)
 	char init5[] = {SOP, cCommandSetLed, 0xf2, 0x0a, 0x00, EOP};  //blue LED plus cross brightness 10
 #elif defined(HS7810A) || defined(HS7819) || defined(HS7420) || defined(HS7429)
 	char init5[] = {SOP, cCommandSetLed, 0x02, 0x03, 0x00, EOP};  //logo brightness 3
@@ -1470,9 +1470,9 @@ int nuvoton_init_func(void)
 	dprintk(100, "%s >\n", __func__);
 
 	sema_init(&write_sem, 1);
-#if defined(OCTAGON1008)
+#if defined(HS9510)
 	printk("Fortis HS9510");
-#elif defined(FORTIS_HDBOX)
+#elif defined(FS9000)
 	printk("Fortis FS9000/9200");
 #elif defined(HS7110)
 	printk("Fortis HS7110");
@@ -1508,7 +1508,7 @@ int nuvoton_init_func(void)
 #if !defined(HS7810A) && !defined(HS7819) && !defined(HS7110) && !defined(HS7119) //VFD models
 	res |= nuvotonSetBrightness(7);
 	res |= nuvotonWriteString("T.-Ducktales", strlen("T.-Ducktales"));
-#elif defined(FORTIS_HDBOX) || defined(OCTAGON1008) //models with icons
+#elif defined(FS9000) || defined(HS9510) //models with icons
 	for (vLoop = ICON_MIN + 1; vLoop < ICON_MAX; vLoop++)
 	{
 		res |= nuvotonSetIcon(vLoop, 0); //switch all icons off
@@ -1836,7 +1836,7 @@ int NUVOTONdev_close(struct inode *inode, struct file *filp)
 static int NUVOTONdev_ioctl(struct inode *Inode, struct file *File, unsigned int cmd, unsigned long arg)
 {
 	static int mode = 0;
-#if defined(FORTIS_HDBOX) || defined(OCTAGON1008)
+#if defined(FS9000) || defined(HS9510)
 	int icon_nr, on, i;
 #endif
 	struct nuvoton_ioctl_data *nuvoton = (struct nuvoton_ioctl_data *) arg;
@@ -1864,9 +1864,9 @@ static int NUVOTONdev_ioctl(struct inode *Inode, struct file *File, unsigned int
 		}
 		case VFDBRIGHTNESS:
 		{
-#if defined(FORTIS_HDBOX) \
-|| defined(OCTAGON1008) \
-|| defined(ATEVIO7500) \
+#if defined(FS9000) \
+|| defined(HS9510) \
+|| defined(HS8200) \
 || defined(HS7420) \
 || defined(HS7429)
 			if (mode == 0)
@@ -1885,7 +1885,7 @@ static int NUVOTONdev_ioctl(struct inode *Inode, struct file *File, unsigned int
 				}
 				res = nuvotonSetBrightness(nuvoton->u.brightness.level);
 			}
-#endif //all other than Octagon1008, FORTIS_HDBOX, ATEVIO7500, HS7420 or HS7429
+#endif //all other than Octagon1008, FS9000, HS8200, HS7420 or HS7429
 			mode = 0;
 			break;
 		}
@@ -1897,7 +1897,7 @@ static int NUVOTONdev_ioctl(struct inode *Inode, struct file *File, unsigned int
 		}
 		case VFDICONDISPLAYONOFF:
 		{
-#if defined(FORTIS_HDBOX)
+#if defined(FS9000)
 			if (mode == 0) //vfd mode
 			{
 				icon_nr = data->data[0];
@@ -1973,7 +1973,7 @@ static int NUVOTONdev_ioctl(struct inode *Inode, struct file *File, unsigned int
 					}
 				}
 			}
-#elif defined(OCTAGON1008)
+#elif defined(HS9510)
 			if (mode == 0) //vfd mode
 			{
 				icon_nr = data->data[0];
@@ -2039,9 +2039,9 @@ static int NUVOTONdev_ioctl(struct inode *Inode, struct file *File, unsigned int
 					}
 				}
 			}
-#elif defined(ATEVIO7500)
+#elif defined(HS8200)
 			printk("Set icon not supported on HS8200.\n");
-#endif //all other than Octagon1008, FORTIS_HDBOX and Atevio7500
+#endif //all other than Octagon1008, FS9000 and Atevio7500
 			mode = 0;
 			res = 0;
 			break;

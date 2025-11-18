@@ -24,7 +24,7 @@ endif
 ifdef TF7700
  PART1=1
 endif
-ifdef FORTIS_HDBOX
+ifdef FS9000
  PART1=1
 endif
 ifdef HL101
@@ -36,7 +36,7 @@ endif
 ifdef VIP2_V1
  PART1=1
 endif
-ifdef OCTAGON1008
+ifdef HS9510
  PART1=1
 endif
 ifdef CUBEREVO
@@ -85,7 +85,7 @@ endif
 ifdef SPARK7162
  PART2=1
 endif
-ifdef ATEVIO7500
+ifdef HS8200
  PART2=1
 endif
 ifdef UFS913
@@ -146,7 +146,7 @@ CCFLAGSY += \
 endif
 
 ifdef PART2
-#UFS912, SPARK, SPARK7162, atevio7500, hs7110, hs7810a, hs7119, hs7819, atemio520, atemio530
+#UFS912, SPARK, SPARK7162, hs8200, hs7110, hs7810a, hs7119, hs7819, atemio520, atemio530
 CCFLAGSY += \
 	-DPLAYER2_PRIMARY_VIDEO_BUFFER_MEMORY=0x02400000    \
 	-DPLAYER2_SECONDARY_VIDEO_BUFFER_MEMORY=0x00900000  \

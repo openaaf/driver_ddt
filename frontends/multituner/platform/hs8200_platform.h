@@ -1,5 +1,5 @@
 /*
- * @brief at7500_platform.c
+ * @brief hs8200_platform.c
  *
  * @author konfetti
  *
@@ -20,8 +20,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef _at7500_123
-#define _at7500_123
+#ifndef _hs8200_123
+#define _hs8200_123
 
 #include <linux/version.h>
 #include <linux/dvb/version.h>

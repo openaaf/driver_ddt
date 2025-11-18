@@ -159,10 +159,10 @@ int proc_tsmux_ci0_input_write(struct file *file, const char __user *buf,
  || defined(CUBEREVO_MINI2) \
  || defined(CUBEREVO_9500HD) \
  || defined(CUBEREVO_3000HD) \
- || defined(FORTIS_HDBOX) \
+ || defined(FS9000) \
  || defined(HL101) \
  || defined(VIP1_V2) \
- || defined(ATEVIO7500) \
+ || defined(HS8200) \
  || defined(IPBOX9900) \
  || defined(IPBOX99) \
  || defined(IPBOX55) \
@@ -193,10 +193,10 @@ int proc_tsmux_ci0_input_read(char *page, char **start, off_t off, int count,
  || defined(CUBEREVO_MINI2) \
  || defined(CUBEREVO_9500HD) \
  || defined(CUBEREVO_3000HD) \
- || defined(FORTIS_HDBOX) \
+ || defined(FS9000) \
  || defined(HL101) \
  || defined(VIP1_V2) \
- || defined(ATEVIO7500) \
+ || defined(HS8200) \
  || defined(IPBOX9900) \
  || defined(IPBOX99) \
  || defined(IPBOX55) \
@@ -236,10 +236,10 @@ int proc_tsmux_ci1_input_write(struct file *file, const char __user *buf,
  || defined(CUBEREVO_MINI2) \
  || defined(CUBEREVO_9500HD) \
  || defined(CUBEREVO_3000HD) \
- || defined(FORTIS_HDBOX) \
+ || defined(FS9000) \
  || defined(HL101) \
  || defined(VIP1_V2) \
- || defined(ATEVIO7500) \
+ || defined(HS8200) \
  || defined(IPBOX9900) \
  || defined(IPBOX99) \
  || defined(IPBOX55) \
@@ -270,10 +270,10 @@ int proc_tsmux_ci1_input_read(char *page, char **start, off_t off, int count,
  || defined(CUBEREVO_MINI2) \
  || defined(CUBEREVO_9500HD) \
  || defined(CUBEREVO_3000HD) \
- || defined(FORTIS_HDBOX) \
+ || defined(FS9000) \
  || defined(HL101) \
  || defined(VIP1_V2) \
- || defined(ATEVIO7500) \
+ || defined(HS8200) \
  || defined(IPBOX9900) \
  || defined(IPBOX99) \
  || defined(IPBOX55) \

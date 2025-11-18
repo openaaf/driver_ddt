@@ -67,8 +67,8 @@ Date Modification Name
  * (BWC vs. BWD)
  */
 #if (defined(CONFIG_KERNELVERSION) || LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,32)) && defined(__TDT__)
-#if (defined(FORTIS_HDBOX) \
- || defined(OCTAGON1008))
+#if (defined(FS9000) \
+ || defined(HS9510))
 #define MIXER_NUM_PERIODS 3
 #elif defined(UFS922)
 #define MIXER_NUM_PERIODS 2
@@ -85,12 +85,12 @@ Date Modification Name
 #define MIXER_NUM_PERIODS 3
 #endif
 #elif defined(__TDT__) \
- && (defined(FORTIS_HDBOX) \
+ && (defined(FS9000) \
  || defined(UFS922) \
  || defined(HL101) \
  || defined(VIP1_V2) \
  || defined(VIP2_V1) \
- || defined(OCTAGON1008))
+ || defined(HS9510))
 #define MIXER_NUM_PERIODS 4
 #elif defined(__TDT__)
 #define MIXER_NUM_PERIODS 3

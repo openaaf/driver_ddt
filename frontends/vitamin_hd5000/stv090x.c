@@ -2596,7 +2596,7 @@ static int stv090x_delivery_search(struct stv090x_state *state)
 			STV090x_SETFIELD_Px(reg, DVBS2_ENABLE_FIELD, 1);
 			if (STV090x_WRITE_DEMOD(state, DMDCFGMD, reg) < 0)
 				goto err;
-#ifndef FORTIS_HDBOX
+#ifndef FS9000
 			if (stv090x_vitclk_ctl(state, 0) < 0)
 				goto err;
 #else
@@ -4177,7 +4177,7 @@ static int stv090x_optimize_track(struct stv090x_state *state)
 			STV090x_SETFIELD_Px(reg, MANUAL_SXROLLOFF_FIELD, 0x01);
 			if (STV090x_WRITE_DEMOD(state, DEMOD, reg) < 0)
 				goto err;
-#ifndef FORTIS_HDBOX
+#ifndef FS9000
 			if (state->device == STX7111)
 			{
 				if (STV090x_WRITE_DEMOD(state, ERRCTRL1, 0x73) < 0)
@@ -4255,7 +4255,7 @@ static int stv090x_optimize_track(struct stv090x_state *state)
 				goto err;
 			if (STV090x_WRITE_DEMOD(state, BCLC, 0) < 0)
 				goto err;
-#ifndef FORTIS_HDBOX
+#ifndef FS9000
 			if (state->frame_len == STV090x_LONG_FRAME)
 			{
 				reg = STV090x_READ_DEMOD(state, DMDMODCOD);
@@ -4414,7 +4414,7 @@ static int stv090x_optimize_track(struct stv090x_state *state)
 	}
 	if (STV090x_WRITE_DEMOD(state, AGC2REF, 0x38) < 0)
 		goto err;
-#ifndef FORTIS_HDBOX
+#ifndef FS9000
 	/* AUTO tracking MODE */
 	if (STV090x_WRITE_DEMOD(state, SFRUP1, 0x80) < 0)
 		goto err;
@@ -4715,7 +4715,7 @@ static enum stv090x_signal_state stv090x_algo(struct stv090x_state *state)
 			goto err;
 		if (STV090x_WRITE_DEMOD(state, TMGCFG, 0xd2) < 0)
 			goto err;
-#ifndef FORTIS_HDBOX
+#ifndef FS9000
 		if (state->device != STX7111)
 		{
 			if (state->srate < 2000000)
@@ -4766,7 +4766,7 @@ static enum stv090x_signal_state stv090x_algo(struct stv090x_state *state)
 		else
 			low_sr = 1;
 	}
-#ifndef FORTIS_HDBOX
+#ifndef FS9000
 	if (state->config->tuner_set_bbgain)
 	{
 		reg = state->config->tuner_bbgain;
@@ -4898,7 +4898,7 @@ static enum stv090x_signal_state stv090x_algo(struct stv090x_state *state)
 		stv090x_optimize_track(state);
 		if (state->dev_ver >= 0x20)
 		{
-#ifdef FORTIS_HDBOX
+#ifdef FS9000
 			reg = stv090x_read_reg(state, STV090x_TSTRES0);
 			STV090x_SETFIELD(reg, FRESFEC_FIELD, 0x1);
 			if (stv090x_write_reg(state, STV090x_TSTRES0, reg) < 0)
@@ -4919,7 +4919,7 @@ static enum stv090x_signal_state stv090x_algo(struct stv090x_state *state)
 			STV090x_SETFIELD_Px(reg, RST_HWARE_FIELD, 1); /* merger reset */
 			if (STV090x_WRITE_DEMOD(state, TSCFGH, reg) < 0)
 				goto err;
-#ifdef FORTIS_HDBOX
+#ifdef FS9000
 			reg = stv090x_read_reg(state, STV090x_TSTRES0);
 			STV090x_SETFIELD(reg, FRESFEC_FIELD, 0x0);
 			if (stv090x_write_reg(state, STV090x_TSTRES0, reg) < 0)
@@ -6124,7 +6124,7 @@ static int stv090x_setup(struct dvb_frontend *fe)
 		printk("INFO: Cut: 0x%02x probably incomplete support!\n",
 			   state->dev_ver);
 	}
-#ifndef FORTIS_HDBOX
+#ifndef FS9000
 	/* ADC1 range */
 	reg = stv090x_read_reg(state, STV090x_TSTTNR1);
 	STV090x_SETFIELD(reg, ADC1_INMODE_FIELD,
